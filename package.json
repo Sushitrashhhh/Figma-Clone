@@ -1,0 +1,5 @@
+{
+  "dependencies": {
+    "@liveblocks/react": "^3.13.3"
+  }
+}

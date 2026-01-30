@@ -1,7 +1,7 @@
 import { useSelf, useStorage } from "@liveblocks/react";
 import { memo, useEffect, useRef, useState } from "react";
 import useSelectionBounds from "~/hooks/useSelectionBounds";
-import { LayerType, Side, XYWH } from "~/types";
+import { type Camera, CanvasMode, LayerType, Side, type XYWH } from "~/types";
 
 const handleWidth = 8;
 
@@ -175,4 +175,31 @@ const SelectionBox = memo(
 
 SelectionBox.displayName = "SelectionBox";
 
+const SelectionTools = memo(
+  ({ camera, canvasMode }: { camera: Camera; canvasMode: CanvasMode }) => {
+    const selection = useSelf((me) => me.presence.selection);
+    const bounds = useSelectionBounds();
+
+    if (!bounds || !selection || selection.length === 0) return null;
+    if (canvasMode !== CanvasMode.None) return null;
+
+    const x = bounds.x + bounds.width / 2 + camera.x;
+    const y = bounds.y + camera.y;
+
+    return (
+      <div
+        className="absolute flex gap-2 rounded-lg bg-white p-2 shadow-md"
+        style={{
+          transform: `translate(calc(${x * camera.zoom}px - 50%), calc(${y * camera.zoom}px - 100%))`,
+        }}
+      >
+        {/* Add your selection tools here */}
+      </div>
+    );
+  },
+);
+
+SelectionTools.displayName = "SelectionTools";
+
+export { SelectionTools };
 export default SelectionBox;

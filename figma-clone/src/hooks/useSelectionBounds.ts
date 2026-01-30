@@ -27,12 +27,12 @@ function boundingBox(layers: Layer[]): XYWH | null {
 }
 
 
-export default function useSelectionBound() {
+export default function useSelectionBounds() {
     const selection = useSelf((me: any) => me.presence.selection, shallow) as string[] | null;
     return useStorage((root: any) => {
         const selectedLayers = selection
             ?.map((layerId: string) => root.layers.get(layerId)!)
             .filter(Boolean);
         return boundingBox(selectedLayers ?? []);
-    }, shallow)
+    }, shallow);
 }

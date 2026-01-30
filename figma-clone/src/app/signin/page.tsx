@@ -5,7 +5,7 @@ import { useActionState } from "react";
 import {authenticate} from "../actions/auth";
 
 export default function Page() {
-    const [errorMessage, fromAction, isPending] = useActionState(authenticate, undefined,);
+    const [errorMessage, formAction, isPending] = useActionState(authenticate, undefined,);
 
     return (
         <div className="flex min-h-screen items-center justify-center bg-white px-4">

@@ -5,7 +5,7 @@ import Link from "next/link";
 import { AiOutlineFontSize } from "react-icons/ai";
 import { IoEllipseOutline, IoSquareOutline } from "react-icons/io5";
 import { PiPathLight, PiSidebarSimpleThin } from "react-icons/pi";
-import { Color, LayerType } from "~/types";
+import { type Color, LayerType } from "~/types";
 import { colorToCss, connectionIdToColor, hexToRgb } from "~/utils";
 import LayerButton from "./LayerButton";
 import NumberInput from "./NumberInput";
@@ -14,7 +14,7 @@ import { RiRoundedCorner } from "react-icons/ri";
 import ColorPicker from "./ColorPicker";
 import Dropdown from "./Dropdown";
 import UserAvatar from "./UserAvatar";
-import { User } from "@prisma/client";
+import type { User } from "../../../generated/prisma";
 import ShareMenu from "./ShareMenu";
 
 export default function Sidebars({
@@ -244,7 +244,7 @@ export default function Sidebars({
                       onChange={(number) => {
                         updateLayer({ x: number });
                       }}
-                      classNames="w-1/2"
+                      className="w-1/2"
                       icon={<p>X</p>}
                     />
                     <NumberInput
@@ -252,7 +252,7 @@ export default function Sidebars({
                       onChange={(number) => {
                         updateLayer({ y: number });
                       }}
-                      classNames="w-1/2"
+                      className="w-1/2"
                       icon={<p>Y</p>}
                     />
                   </div>
@@ -274,7 +274,7 @@ export default function Sidebars({
                           onChange={(number) => {
                             updateLayer({ width: number });
                           }}
-                          classNames="w-1/2"
+                          className="w-1/2"
                           icon={<p>W</p>}
                         />
                         <NumberInput
@@ -282,7 +282,7 @@ export default function Sidebars({
                           onChange={(number) => {
                             updateLayer({ height: number });
                           }}
-                          classNames="w-1/2"
+                          className="w-1/2"
                           icon={<p>H</p>}
                         />
                       </div>
@@ -306,7 +306,7 @@ export default function Sidebars({
                       onChange={(number) => {
                         updateLayer({ opacity: number });
                       }}
-                      classNames="w-full"
+                      className="w-full"
                       icon={<BsCircleHalf />}
                     />
                   </div>
@@ -322,7 +322,7 @@ export default function Sidebars({
                         onChange={(number) => {
                           updateLayer({ cornerRadius: number });
                         }}
-                        classNames="w-full"
+                        className="w-full"
                         icon={<RiRoundedCorner />}
                       />
                     </div>
@@ -374,7 +374,7 @@ export default function Sidebars({
                             onChange={(number) => {
                               updateLayer({ fontSize: number });
                             }}
-                            classNames="w-full"
+                            className="w-full"
                             icon={<p>W</p>}
                           />
                         </div>

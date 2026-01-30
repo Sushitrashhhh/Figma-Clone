@@ -12,23 +12,24 @@ import {
 import {
   colorToCss,
   findIntersectionLayersWithRectangle,
-  penPointsToPathPayer,
+  penPointsToPathLayer,
   pointerEventToCanvasPoint,
   resizeBounds,
 } from "~/utils";
 import LayerComponent from "./LayerComponent";
 import {
-  Camera,
+  type Camera,
   CanvasMode,
-  CanvasState,
-  EllipseLayer,
-  Layer,
+  type CanvasState,
+  type EllipseLayer,
+  type Layer,
   LayerType,
-  Point,
-  RectangleLayer,
+  type Point,
+  type RectangleLayer,
   Side,
-  TextLayer,
-  XYWH,
+  type TextLayer,
+  type XYWH,
+  
 } from "~/types";
 import { nanoid } from "nanoid";
 import { LiveObject } from "@liveblocks/client";
@@ -37,11 +38,11 @@ import React from "react";
 import ToolsBar from "../toolsbar/ToolsBar";
 import Path from "./Path";
 import SelectionBox from "./SelectionBox";
+import { SelectionTools } from "./SelectionTools";
 import useDeleteLayers from "~/hooks/useDeleteLayers";
-import SelectionTools from "./SelectionTools";
 import Sidebars from "../sidebars/Sidebars";
-import MultiplayerGuides from "./MultiplayerGuides";
-import { User } from "@prisma/client";
+import MultiplayerGuide from "./MultiplayerGuide";
+import type { User } from "../../../generated/prisma";
 
 const MAX_LAYERS = 100;
 
@@ -238,7 +239,7 @@ export default function Canvas({
     liveLayers.set(
       id,
       new LiveObject(
-        penPointsToPathPayer(pencilDraft, { r: 217, g: 217, b: 217 }),
+        penPointsToPathLayer(pencilDraft, { r: 217, g: 217, b: 217 }),
       ),
     );
 
@@ -283,6 +284,7 @@ export default function Canvas({
 
       const bounds = resizeBounds(
         canvasState.initialBounds,
+        canvasState.corner,
         canvasState.corner,
         point,
       );
@@ -511,7 +513,7 @@ export default function Canvas({
                     )}
                   />
                 )}
-              <MultiplayerGuides />
+              <MultiplayerGuide />
               {pencilDraft !== null && pencilDraft.length > 0 && (
                 <Path
                   x={0}

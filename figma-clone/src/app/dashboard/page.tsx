@@ -1,33 +1,37 @@
-"use server"
+"use server";
 
-import {auth} from "~/server/auth";
-import {signout} from "../actions/auth";
-import {db} from "~/server/db";
+import { auth } from "~/server/auth";
+import { signout } from "../actions/auth";
+import { db } from "~/server/db";
 import UserMenu from "~/components/dashboard/UserMenu";
 import CreateRoom from "~/components/dashboard/CreateRoom";
 import RoomsView from "~/components/dashboard/RoomsView";
 
 export default async function Page() {
-    const session = await auth();
-    const user = await db.user.findUniqueOrThrow({
-        where: {
-            id: session?.user.id,
-        },
+  const session = await auth();
+
+  if (!session?.user?.id) {
+    throw new Error("Unauthorized: User session not found");
+  }
+
+  const user = await db.user.findUniqueOrThrow({
+    where: {
+      id: session.user.id,
+    },
+    include: {
+      ownedRooms: true,
+      roomInvites: {
         include: {
-            ownedRooms: true,
-            roomInvites: {
-                include:{
-                    room: true,
-                },
-            },
+          room: true,
         },
-});
+      },
+    },
+  });
 
-
-return (
+  return (
     <div className="flex h-screen w-full">
       <div className="flex h-screen min-w-[264px] flex-col border-r border-gray-200 bg-white p-2">
-        <UserMenu email={user.email} />
+        <UserMenu ownedRooms={user.ownedRooms} roomInvites={user.roomInvites.map((x) => x.room)} />
       </div>
       <div className="flex h-screen w-full flex-col">
         <div className="flex min-h-[50px] items-center border-b border-gray-200 bg-white pl-8">

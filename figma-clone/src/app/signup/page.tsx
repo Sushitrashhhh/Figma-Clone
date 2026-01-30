@@ -2,10 +2,13 @@
 
 import Link from "next/link";
 import { useActionState } from "react";
-import { authenticate } from "../actions/auth";
+import { register } from "../actions/auth";
 
 export default function Page(){
-    const [errorMessage, formAction, isPending] = useActionState(authenticate, undefined,);
+    const [errorMessage, formAction, isPending] = useActionState(
+        register,
+        undefined,
+    );
 
     return (
         <div className="flex min-h-screen items-center justify-center bg-white px-4">

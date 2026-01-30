@@ -1,10 +1,10 @@
 "use client";
 
-import type { User } from "@prisma/client";
+import type { User } from "../../../generated/prisma";
 import { useState} from "react";
 import {IoClose} from "react-icons/io5";
 import { deleteInvitation, shareRoom } from "~/app/actions/rooms";
-import UserAvatar from "../../UserAvatar";
+import UserAvatar from "./UserAvatar";
 
 export default function ShareMenu({
     roomId,
@@ -78,7 +78,7 @@ export default function ShareMenu({
                         Full access
                       </span>
                       <IoClose
-                        onClick={() => deleteInvitation(roomId, user.email)}
+                        onClick={() => user.email && deleteInvitation(roomId, user.email)}
                         className="h-4 w-4 cursor-pointer text-gray-500"
                       />
                     </div>

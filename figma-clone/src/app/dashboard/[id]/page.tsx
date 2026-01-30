@@ -17,7 +17,7 @@ export default async function Page({ params }: { params: ParamsType }) {
       title: true,
       ownerId: true,
       roomInvites: {
-        select: {
+        include: {
           user: true,
         },
       },
@@ -28,8 +28,8 @@ export default async function Page({ params }: { params: ParamsType }) {
 
   const inviteeUserIds = room.roomInvites.map((invite) => invite.user.id);
   if (
-    !inviteeUserIds.includes(session?.user.id ?? "") &&
-    session?.user.id !== room.ownerId
+    !inviteeUserIds.includes(session?.user?.id ?? "") &&
+    session?.user?.id !== room.ownerId
   ) {
     redirect("/404");
   }

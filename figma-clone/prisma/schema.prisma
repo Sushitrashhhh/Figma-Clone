@@ -61,9 +61,36 @@ model User {
     email         String?   @unique
     emailVerified DateTime?
     image         String?
+    password      String?   // add this
     accounts      Account[]
     sessions      Session[]
     posts         Post[]
+    ownedRooms    Room[]
+    roomInvites   RoomInvite[]
+}
+
+model Room {
+    id          String       @id @default(cuid())
+    title       String       @default("Untitled")
+    createdAt   DateTime     @default(now())
+    updatedAt   DateTime     @updatedAt
+
+    ownerId     String
+    owner       User         @relation(fields: [ownerId], references: [id], onDelete: Cascade)
+
+    roomInvites RoomInvite[]
+}
+
+model RoomInvite {
+    id        String   @id @default(cuid())
+    roomId    String
+    userId    String
+    createdAt DateTime @default(now())
+
+    room      Room     @relation(fields: [roomId], references: [id], onDelete: Cascade)
+    user      User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+    @@unique([roomId, userId])
 }
 
 model VerificationToken {

@@ -1,3 +1,8 @@
+if (!globalThis.setImmediate) {
+  // @ts-ignore
+  globalThis.setImmediate = ((fn: any, ...args: any[]) => setTimeout(fn, 0, ...args)) as any;
+}
+
 import { match } from "assert";
 import { auth } from "./server/auth";
 

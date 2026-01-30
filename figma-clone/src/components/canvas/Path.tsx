@@ -1,4 +1,4 @@
-
+// "use client";
 import {getStroke} from "perfect-freehand";
 import {getSvgPathFromStroke} from "~/utils";
 

@@ -1,29 +1,105 @@
-# Create T3 App
+# Real-Time Collaborative Canvas
 
-This is a [T3 Stack](https://create.t3.gg/) project bootstrapped with `create-t3-app`.
+A feature-rich collaborative canvas application I built from scratch using modern web technologies. This project enables real-time collaboration with live cursor tracking, shape editing, and much more.
 
-## What's next? How do I make an app with this?
+## 🚀 Features I've Implemented
 
-We try to keep this project as simple as possible, so you can start with just the scaffolding we set up for you, and add additional things later when they become necessary.
+- **🔄 Real-time Canvas Updates** - See changes instantly as they happen
+- **👀 Live Cursor Tracking** - Watch other users' cursors move in real-time
+- **🔗 Room Sharing** - Collaborate with others in shared workspaces
+- **🛠️ Property Editor** - Fine-tune shapes, colors, and styling
+- **📊 Dashboard** - Manage and organize your canvases
+- **✏️ Drawing Tools** - Create shapes, freehand drawings, and add text
+- **↩️ Undo/Redo** - Full history management for all actions
+- **🔀 Layer Management** - Control z-index and layer ordering
+- **🔑 Authentication** - Secure sign up and sign in system
+- **🚀 Deployed on Vercel** - Production-ready deployment
+- **📊 Postgres Database** - Robust data persistence
 
-If you are not familiar with the different technologies used in this project, please refer to the respective docs. If you still are in the wind, please join our [Discord](https://t3.gg/discord) and ask for help.
+## 🛠️ Tech Stack
 
-- [Next.js](https://nextjs.org)
-- [NextAuth.js](https://next-auth.js.org)
-- [Prisma](https://prisma.io)
-- [Drizzle](https://orm.drizzle.team)
-- [Tailwind CSS](https://tailwindcss.com)
-- [tRPC](https://trpc.io)
+I built this application using:
 
-## Learn More
+- **Next.js 15** - React framework for production
+- **React 18** - UI component library
+- **TypeScript** - Type-safe development
+- **Liveblocks** - Real-time collaboration infrastructure
+- **PostgreSQL** - Database for persistent storage
+- **Vercel** - Deployment platform
 
-To learn more about the [T3 Stack](https://create.t3.gg/), take a look at the following resources:
+## 📦 Installation & Setup
 
-- [Documentation](https://create.t3.gg/)
-- [Learn the T3 Stack](https://create.t3.gg/en/faq#what-learning-resources-are-currently-available) — Check out these awesome tutorials
+Follow these steps to run the project locally:
 
-You can check out the [create-t3-app GitHub repository](https://github.com/t3-oss/create-t3-app) — your feedback and contributions are welcome!
+### 1. Clone the Repository
 
-## How do I deploy this?
+```bash
+git clone https://github.com/Priyankar/Sushitrashhhh.git
+```
 
-Follow our deployment guides for [Vercel](https://create.t3.gg/en/deployment/vercel), [Netlify](https://create.t3.gg/en/deployment/netlify) and [Docker](https://create.t3.gg/en/deployment/docker) for more information.
+### 2. Navigate to Project Directory
+
+```bash
+cd Sushitrashhhh
+```
+
+### 3. Install Node.js
+
+If you don't have Node.js installed, download it from [nodejs.org](https://nodejs.org/)
+
+### 4. Install Dependencies
+
+```bash
+npm install
+```
+
+### 5. Setup Liveblocks
+
+1. Sign up at [Liveblocks](https://liveblocks.io/)
+2. Create a new project
+3. Grab your public and secret API keys
+
+### 6. Configure Environment Variables
+
+Create a `.env` file in the root directory and add the required variables (check `env.js` for the full list):
+
+```env
+LIVEBLOCKS_PUBLIC_KEY=your_public_key_here
+LIVEBLOCKS_SECRET_KEY=your_secret_key_here
+# Add other environment variables as needed
+```
+
+### 7. Run the Development Server
+
+```bash
+npm run dev
+```
+
+### 8. Access the Application
+
+Open your browser and visit:
+```
+http://localhost:3000
+```
+
+## 🎯 What I Learned
+
+Building this project from scratch taught me:
+- Real-time collaboration patterns
+- Complex state management across multiple users
+- Canvas manipulation and rendering optimization
+- Authentication and authorization flows
+- Database design for collaborative applications
+- Extensive debugging and error handling - I encountered and solved countless bugs, which significantly improved my problem-solving skills and taught me to write more resilient code
+
+## 🤝 Contributing
+
+Feel free to fork this repository and submit pull requests. I'm open to suggestions and improvements!
+
+## 📝 License
+
+This project is open source and available under the MIT License.
+
+---
+
+Built with ❤️ by me

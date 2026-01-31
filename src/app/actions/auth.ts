@@ -20,9 +20,9 @@ export async function authenticate(
 ) {
     try {
         await signIn("credentials", {
-            email: formData.get("email"),
-            password: formData.get("password"),
-            redirectTo: formData.get("redirectTo") || "/dashboard",
+            email: formData.get("email") as string,
+            password: formData.get("password") as string,
+            redirectTo: (formData.get("redirectTo") as string) || "/dashboard",
         });
     } catch (error) {
         if (error instanceof AuthError){

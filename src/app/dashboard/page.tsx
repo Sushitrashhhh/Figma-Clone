@@ -1,5 +1,6 @@
 "use server";
 
+import { redirect } from "next/navigation";
 import { auth } from "~/server/auth";
 import { signout } from "../actions/auth";
 import { db } from "~/server/db";
@@ -11,10 +12,10 @@ export default async function Page() {
   const session = await auth();
 
   if (!session?.user?.id) {
-    throw new Error("Unauthorized: User session not found");
+    redirect("/signin");
   }
 
-  const user = await db.user.findUniqueOrThrow({
+  const user = await db.user.findUnique({
     where: {
       id: session.user.id,
     },
@@ -27,6 +28,10 @@ export default async function Page() {
       },
     },
   });
+
+  if (!user) {
+    redirect("/signin");
+  }
 
   return (
     <div className="flex h-screen w-full">

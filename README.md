@@ -41,7 +41,7 @@ git clone https://github.com/Sushitrashhhh/Figma-Clone.git
 ### 2. Navigate to Project Directory
 
 ```bash
-cd Sushitrashhhh
+cd Figma-Clone
 ```
 
 ### 3. Install Node.js

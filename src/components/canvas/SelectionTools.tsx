@@ -1,7 +1,8 @@
 import { useSelf, useStorage } from "@liveblocks/react";
 import { memo, useEffect, useRef, useState } from "react";
 import useSelectionBounds from "~/hooks/useSelectionBounds";
-import { type Camera, CanvasMode, LayerType, Side, type XYWH } from "~/types";
+import { CanvasMode, LayerType, Side } from "~/types";
+import type { Camera, XYWH } from "~/types";
 
 const handleWidth = 8;
 

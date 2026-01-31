@@ -1,19 +1,17 @@
-if (!globalThis.setImmediate) {
-  // @ts-ignore
-  globalThis.setImmediate = ((fn: any, ...args: any[]) => setTimeout(fn, 0, ...args)) as any;
-}
+import { NextRequest, NextResponse } from "next/server";
 
-import { match } from "assert";
-import { auth } from "./server/auth";
+export function middleware(req: NextRequest) {
+    // Check for auth token in cookies
+    const token = req.cookies.get("next-auth.session-token")?.value ||
+                  req.cookies.get("__Secure-next-auth.session-token")?.value;
 
-export default auth((req)=> {
-    const isAuthenticated = !!req.auth;
-
-    if(!isAuthenticated) {
+    if (!token) {
         const newUrl = new URL("/signin", req.nextUrl.origin);
-        return Response.redirect(newUrl);
+        return NextResponse.redirect(newUrl);
     }
-});
+
+    return NextResponse.next();
+}
 
 export const config = {
     matcher: ["/dashboard", "/dashboard/:path*"],

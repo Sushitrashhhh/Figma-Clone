@@ -16,7 +16,7 @@ const LayerButton = ({
     isSelected: boolean;
 }) => {
     const updateSelection = useMutation(({setMyPresence}, layerId: string) => {
-        setMyPresence({selectedLayerId: [layerId]}, {addToHistory: true});
+        setMyPresence({selection: [layerId]}, {addToHistory: true});
     }, []);
 
     return (

@@ -1,6 +1,6 @@
 import { useMutation } from "@liveblocks/react";
 import { useEffect, useRef, useState } from "react";
-import { EllipseLayer, RectangleLayer, TextLayer } from "~/types";
+import type { EllipseLayer, RectangleLayer, TextLayer } from "~/types";
 import { colorToCss } from "~/utils";
 
 export default function Text({

@@ -8,7 +8,7 @@ import {redirect} from "next/navigation";
 export async function createRoom() {
     const session = await auth();
 
-    if (!session?.user.id) throw new Error("No user id found.");
+    if (!session?.user?.id) throw new Error("No user id found.");
 
     const room = await db.room.create({
         data: {
@@ -28,7 +28,7 @@ export async function createRoom() {
 export async function updateRoomTitle(title: string, id: string) {
     const session = await auth();
 
-    if (!session?.user.id) throw new Error("No user id found.");
+    if (!session?.user?.id) throw new Error("No user id found.");
 
     await db.room.findUniqueOrThrow({
         where: {
@@ -50,7 +50,7 @@ export async function updateRoomTitle(title: string, id: string) {
 
 export async function deleteRoom(id: string) {
     const session = await auth();
-    if (!session?.user.id) throw new Error("No user id found.");
+    if (!session?.user?.id) throw new Error("No user id found.");
 
     await db.room.findUniqueOrThrow({
         where: {
@@ -72,7 +72,7 @@ export async function deleteRoom(id: string) {
 export async function shareRoom(id: string, inviteEmail: string) {
     const session = await auth();
 
-    if (!session?.user.id) throw new Error("No user id found.");
+    if (!session?.user?.id) throw new Error("No user id found.");
 
     await db.room.findUniqueOrThrow({
         where: {
@@ -105,7 +105,7 @@ export async function shareRoom(id: string, inviteEmail: string) {
 export async function deleteInvitation(id: string, inviteEmail: string) {
     const session = await auth();
 
-    if(!session?.user.id) throw new Error("No user id found.");
+    if(!session?.user?.id) throw new Error("No user id found.");
 
     await db.room.findUniqueOrThrow({
         where: {
@@ -118,7 +118,7 @@ export async function deleteInvitation(id: string, inviteEmail: string) {
         where: {
             roomId: id,
             user: {
-                email: invalidEmail,
+                email: inviteEmail,
             },
         },
     });

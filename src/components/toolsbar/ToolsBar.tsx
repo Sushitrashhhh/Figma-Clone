@@ -83,7 +83,7 @@ export default function ToolsBar({
         />
         <div className="w-[1px] self-stretch bg-black/10" />
         <div className="flex items-center justify-center">
-          <UndoButton onClick={undo} isActive={canUndo} />
+          <UndoButton onClick={undo} disabled={!canUndo} />
           <RedoButton onClick={redo} isActive={canRedo} />
         </div>
         <div className="w-[1px] self-stretch bg-black/10" />

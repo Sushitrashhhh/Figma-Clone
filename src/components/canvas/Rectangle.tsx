@@ -1,4 +1,4 @@
-import { RectangleLayer } from "~/types";
+import type { RectangleLayer } from "~/types";
 import { colorToCss } from "~/utils";
 
 export default function Rectangle({

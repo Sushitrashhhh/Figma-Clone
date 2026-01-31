@@ -1,41 +1,38 @@
 import { Liveblocks } from "@liveblocks/node";
 import { env } from "~/env";
-import { auth } from "~/server/auth";
-import { db } from "~/server/db";
 
-const liveblocks = new Liveblocks({ secret: env.LIVEBLOCKS_SECRET_KEY });
+const liveblocks = new Liveblocks({ secret: env.LIVEBLOCKS_SECRET_KEY! });
+
+export const runtime = "nodejs";
 
 export async function POST(req: Request) {
-  const userSession = await auth();
+  // This route cannot use Prisma in the previous Edge Runtime configuration
+  // Extract user data from the request body instead
+  try {
+    const { userId, userEmail, roomIds } = await req.json();
+    
+    if (!userId) {
+      return new Response("Unauthorized", { status: 401 });
+    }
 
-  // Get the users room, and invitations to rooms
-  const user = await db.user.findUniqueOrThrow({
-    where: { id: userSession?.user.id },
-    include: {
-      ownedRooms: true,
-      roomInvites: {
-        include: {
-          room: true,
-        },
+    const session = liveblocks.prepareSession(userId, {
+      userInfo: {
+        name: userEmail ?? "Anonymous",
       },
-    },
-  });
+    });
 
-  const session = liveblocks.prepareSession(user.id, {
-    userInfo: {
-      name: user.email ?? "Anonymous",
-    },
-  });
+    // Allow access to provided rooms
+    if (Array.isArray(roomIds)) {
+      roomIds.forEach((roomId: string) => {
+        session.allow(`room:${roomId}`, session.FULL_ACCESS);
+      });
+    }
 
-  user.ownedRooms.forEach((room) => {
-    session.allow(`room:${room.id}`, session.FULL_ACCESS);
-  });
+    const { status, body } = await session.authorize();
 
-  user.roomInvites.forEach((invite) => {
-    session.allow(`room:${invite.room.id}`, session.FULL_ACCESS);
-  });
-
-  const { status, body } = await session.authorize();
-
-  return new Response(body, { status });
+    return new Response(body, { status });
+  } catch (error) {
+    console.error("Liveblocks auth error:", error);
+    return new Response("Unauthorized", { status: 401 });
+  }
 }

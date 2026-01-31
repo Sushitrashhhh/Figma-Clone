@@ -1,4 +1,4 @@
-import { EllipseLayer, RectangleLayer } from "~/types";
+import type { EllipseLayer, RectangleLayer } from "~/types";
 import {colorToCss} from "~/utils";
 
 export default function Ellipse({

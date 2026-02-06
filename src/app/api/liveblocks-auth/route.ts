@@ -1,38 +1,49 @@
 import { Liveblocks } from "@liveblocks/node";
-import { env } from "~/env";
+import { auth } from "../../../server/auth";
 
-const liveblocks = new Liveblocks({ secret: env.LIVEBLOCKS_SECRET_KEY! });
+const liveblocks = new Liveblocks({ 
+  secret: process.env.LIVEBLOCKS_SECRET_KEY as string
+});
 
 export const runtime = "nodejs";
 
 export async function POST(req: Request) {
-  // This route cannot use Prisma in the previous Edge Runtime configuration
-  // Extract user data from the request body instead
   try {
-    const { userId, userEmail, roomIds } = await req.json();
+    const session = await auth();
     
-    if (!userId) {
+    if (!session?.user?.id) {
+      console.log("❌ No authenticated user!");
       return new Response("Unauthorized", { status: 401 });
     }
 
-    const session = liveblocks.prepareSession(userId, {
+    const { user } = session;
+    
+    // Additional safety check for TypeScript
+    if (!user.id) {
+      return new Response("Unauthorized", { status: 401 });
+    }
+    
+    console.log("✅ Authenticated user:", user.id, user.email);
+
+    const { room } = await req.json();
+    console.log("Room requested:", room);
+
+    const liveblocksSession = liveblocks.prepareSession(user.id, {
       userInfo: {
-        name: userEmail ?? "Anonymous",
+        name: user.name ?? user.email ?? "Anonymous",
       },
     });
 
-    // Allow access to provided rooms
-    if (Array.isArray(roomIds)) {
-      roomIds.forEach((roomId: string) => {
-        session.allow(`room:${roomId}`, session.FULL_ACCESS);
-      });
+    if (room) {
+      liveblocksSession.allow(room, liveblocksSession.FULL_ACCESS);
     }
 
-    const { status, body } = await session.authorize();
+    const { status, body } = await liveblocksSession.authorize();
+    console.log("✅ Auth successful, status:", status);
 
     return new Response(body, { status });
   } catch (error) {
-    console.error("Liveblocks auth error:", error);
+    console.error("❌ Liveblocks auth error:", error);
     return new Response("Unauthorized", { status: 401 });
   }
 }
